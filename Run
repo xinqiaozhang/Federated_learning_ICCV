@@ -1,0 +1,119 @@
+
+# Attack method 0--> no attack # mode -- 1: Sign Flip attack, 2:Scaling attack 3:Non-omniscient attack 
+# draw 1 benign attack defense
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 1 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 2 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7  
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 3 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7  
+
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 0 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 1 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 2 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7  
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 3 --en_defence 0 --meank_rate 50  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7  
+
+
+# draw 2 differen attack parameter
+
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --attack_rate 1
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --attack_rate 3
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --attack_rate 5
+python3 federated_main.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --attack_rate 7
+
+# draw 3 Different attack ratio
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --en_partial_att 70 
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --en_partial_att 50 
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --en_partial_att 30 
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 --en_partial_att 10 
+
+
+# draw 4 different users and clients
+python3 federated_main.py --dataset fmnist --num_users 30 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 5 --en_partial_att 0
+python3 federated_main.py --dataset fmnist --num_users 40 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 5 --en_partial_att 0
+python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 5 --en_partial_att 0
+
+python3 federated_main.py --dataset mnist --num_users 30 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7  --en_partial_att 0
+python3 federated_main.py --dataset mnist --num_users 40 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.002 --batch_size 12800 --epochs 500 --group_size 7 
+
+
+
+
+
+# python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.0001 --batch_size 30000 --epochs 500 --group_size 7 
+
+
+# python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.0001 --batch_size 30000 --epochs 500 --group_size 7 --en_partial_att 70 
+# python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 700  --lr 0.0001 --batch_size 30000 --epochs 500 --group_size 7 --en_partial_att 50 
+# python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 700  --lr 0.0001 --batch_size 30000 --epochs 500 --group_size 7 --en_partial_att 30 
+# python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 700  --lr 0.0001 --batch_size 30000 --epochs 500 --group_size 7 --en_partial_att 10 
+
+
+# python3 federated_main.py --dataset fmnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.0001 --batch_size 20000 --epochs 500 --group_size 7 --en_partial_att 0  --attack_rate 3
+# Run Mnist
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 500  --lr 0.0002 --batch_size 20000 --epochs 500 --group_size 7 --en_partial_att 1 
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 31 --en_defence 1 --meank_rate 500  --lr 0.0002 --batch_size 20000 --epochs 500 --group_size 7 --en_partial_att 1
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 0  --lr 0.0001 --batch_size 10000 --epochs 200 --group_size 7 --en_partial_att 1
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 32 --en_defence 0 --meank_rate 0  --lr 0.0001 --batch_size 10000 --epochs 200 --group_size 7 --en_partial_att 1
+
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 31 --en_defence 1 --meank_rate 500  --lr 0.0002 --batch_size 20000 --epochs 500 --group_size 7 --en_partial_att 0 --attack_rate 3
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 31 --en_defence 1 --meank_rate 500  --lr 0.0002 --batch_size 20000 --epochs 500 --group_size 7 --en_partial_att 0 --attack_rate 3
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 31 --en_defence 0 --meank_rate 0  --lr 0.0001 --batch_size 10000 --epochs 200 --group_size 7 --en_partial_att 1 --attack_rate 3
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 32 --en_defence 0 --meank_rate 0  --lr 0.0001 --batch_size 10000 --epochs 200 --group_size 7 --en_partial_att 1 --attack_rate 3
+
+
+
+
+
+# python3 federated_main0119.py --dataset fmnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 50  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset fmnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 100  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset fmnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 200  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset fmnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 400  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+
+
+
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 200  --lr 0.0001 --batch_size 10000 --epochs 400 --group_size 7
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 50  --lr 0.0001 --batch_size 10000 --epochs 400 --group_size 7
+# python3 federated_main0119.py --dataset mnist --num_users 50 --model lenet  --attack_method 0 --en_defence 1 --meank_rate 400  --lr 0.0001 --batch_size 10000 --epochs 400 --group_size 7
+
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.04 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.03 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.02 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.01 --batch_size 10000 --epochs 200 --group_size 7
+
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.06 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.075 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.085 --batch_size 10000 --epochs 200 --group_size 7
+
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.095 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.105 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.115 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 1 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.125 --batch_size 10000 --epochs 200 --group_size 7
+
+
+# python3 federated_main0119.py --dataset cifar10 --num_users 50 --model cnncifar  --attack_method 4 --en_defence 0 --meank_rate 0  --lr 0.002 --batch_size 10000 --epochs 200 --group_size 7
+
+# python3 federated_main0119.py --dataset cifar10 --num_users 50 --model cnncifar  --attack_method 0 --en_defence 0 --meank_rate 0  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+
+# python3 federated_main0119.py --dataset cifar10 --num_users 50 --model cnncifar  --attack_method 0 --en_defence 1 --meank_rate 50  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 50 --model cnncifar  --attack_method 0 --en_defence 1 --meank_rate 100  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 50 --model cnncifar  --attack_method 0 --en_defence 1 --meank_rate 200  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0119.py --dataset cifar10 --num_users 50 --model cnncifar  --attack_method 0 --en_defence 1 --meank_rate 500  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+
+
+# python3 federated_main0122.py --dataset cifar10 --num_users 50 --model resnet20  --attack_method 4 --en_defence 0 --meank_rate 50  --lr 0.0002 --batch_size 10000 --epochs 222 --group_size 7
+
+# python3 federated_main0122.py --dataset cifar10 --num_users 50 --model resnet20  --attack_method 0 --en_defence 0 --meank_rate 100  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+
+# python3 federated_main0122.py --dataset cifar10 --num_users 50 --model resnet20  --attack_method 0 --en_defence 1 --meank_rate 50  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0122.py --dataset cifar10 --num_users 50 --model resnet20  --attack_method 0 --en_defence 1 --meank_rate 100  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0122.py --dataset cifar10 --num_users 50 --model resnet20  --attack_method 0 --en_defence 1 --meank_rate 200  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+# python3 federated_main0122.py --dataset cifar10 --num_users 50 --model resnet20  --attack_method 0 --en_defence 1 --meank_rate 500  --lr 0.0002 --batch_size 10000 --epochs 200 --group_size 7
+
+
+
+
+
+
+
+
+
+
