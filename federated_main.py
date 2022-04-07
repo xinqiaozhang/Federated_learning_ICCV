@@ -394,7 +394,7 @@ if __name__ == '__main__':
             good_index = []
             # if args.en_defence and epoch >1:
             if args.en_defence:
-                    global_grads,update_rate, good_index = median_mean_k(updated_local_grads, group_size = args.group_size, rate = update_rate, check_indeces= 0, mode = args.en_partial_att)
+                    global_grads,update_rate, good_index = median_mean_k_defense(updated_local_grads, group_size = args.group_size, rate = update_rate, check_indeces= 0, mode = args.en_partial_att)
             else:
                 global_grads,_ = average_weights(updated_local_grads, mal_num = mal_user_num, mode = 1)
  
