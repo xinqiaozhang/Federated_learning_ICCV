@@ -5,7 +5,24 @@
 
 import numpy as np
 from torchvision import datasets, transforms
+import pdb
+import pickle
+import os
 
+# def mnist_iid(dataset, num_users):
+#     """
+#     Sample I.I.D. client data from MNIST dataset
+#     :param dataset:
+#     :param num_users:
+#     :return: dict of image index
+#     # """
+    # num_items = int(len(dataset)/num_users)
+    # dict_users, all_idxs = {}, [i for i in range(len(dataset))]
+    # for i in range(num_users):
+    #     dict_users[i] = set(np.random.choice(all_idxs, num_items, replace=False))
+    #     all_idxs = list(set(all_idxs) - dict_users[i])
+    # return dict_users
+   
 
 def mnist_iid(dataset, num_users):
     """
@@ -15,10 +32,16 @@ def mnist_iid(dataset, num_users):
     :return: dict of image index
     """
     num_items = int(len(dataset)/num_users)
-    dict_users, all_idxs = {}, [i for i in range(len(dataset))]
-    for i in range(num_users):
+    dict_users = {i: np.array([]) for i in range(num_users)}
+    all_idxs =[i for i in range(len(dataset))]
+    # dict_users, all_idxs = {}, [i for i in range(len(dataset))]
+    for i in range(int(num_users*0.8)):
         dict_users[i] = set(np.random.choice(all_idxs, num_items, replace=False))
         all_idxs = list(set(all_idxs) - dict_users[i])
+    
+    # pdb.set_trace()
+    for x in range(int(num_users*0.8),num_users):
+        dict_users[x] = dict_users[x-int(num_users*0.8)]
     return dict_users
 
 
@@ -36,18 +59,39 @@ def mnist_noniid(dataset, num_users):
     idxs = np.arange(num_shards*num_imgs)
     labels = dataset.targets.numpy()
 
+    # pdb.set_trace()
     # sort labels
     idxs_labels = np.vstack((idxs, labels))
     idxs_labels = idxs_labels[:, idxs_labels[1, :].argsort()]
     idxs = idxs_labels[0, :]
 
+
+    #previous
+    assert num_shards%num_users  == 0
+    # for i in range(num_users):
+    #     rand_set = set(np.random.choice(idx_shard, int(num_shards/num_users), replace=False))
+    #     idx_shard = list(set(idx_shard) - rand_set)
+    #     for rand in rand_set:
+    #         dict_users[i] = np.concatenate(
+    #             (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
+    
+    # #previous
+    # for i in range(num_users):
+    #     rand_set = set(np.random.choice(idx_shard, 2, replace=False))
+    #     idx_shard = list(set(idx_shard) - rand_set)
+    #     for rand in rand_set:
+    #         dict_users[i] = np.concatenate(
+    #             (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
     # divide and assign 2 shards/client
-    for i in range(num_users):
-        rand_set = set(np.random.choice(idx_shard, 2, replace=False))
+    for i in range(int(num_users*0.8)):
+        rand_set = set(np.random.choice(idx_shard, int(num_shards/num_users/0.8), replace=False))
         idx_shard = list(set(idx_shard) - rand_set)
         for rand in rand_set:
             dict_users[i] = np.concatenate(
                 (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
+    for x in range(int(num_users*0.8),num_users):
+        dict_users[x] = np.concatenate(
+                (dict_users[x], dict_users[x-int(num_users*0.8)]), axis=0)
     return dict_users
 
 
@@ -140,7 +184,6 @@ def mnist_noniid_unequal(dataset, num_users):
 
     return dict_users
 
-
 def cifar_iid(dataset, num_users):
     """
     Sample I.I.D. client data from CIFAR10 dataset
@@ -150,9 +193,119 @@ def cifar_iid(dataset, num_users):
     """
     num_items = int(len(dataset)/num_users)
     dict_users, all_idxs = {}, [i for i in range(len(dataset))]
-    for i in range(num_users):
-        dict_users[i] = set(np.random.choice(all_idxs, num_items, replace=False))
+    for i in range(int(num_users*0.8)):
+        dict_users[i] = set(np.random.choice(all_idxs, int(num_items/0.8), replace=False))
         all_idxs = list(set(all_idxs) - dict_users[i])
+    for x in range(int(num_users*0.8),num_users):
+        dict_users[x] = dict_users[x-int(num_users*0.8)]
+        
+    return dict_users
+    
+    # num_items = int(len(dataset)/num_users)
+    # dict_users, all_idxs = {}, [i for i in range(len(dataset))]
+    # for i in range(int(num_users*0.8)):
+    #     dict_users[i] = set(np.random.choice(all_idxs, int(num_items/0.8), replace=False))
+    #     all_idxs = list(set(all_idxs) - dict_users[i])
+    #     # dict_users[i] = set(np.random.choice(all_idxs, int(num_items*1.5), replace=False))
+    #     # all_idxs = list(set(all_idxs) - dict_users[i])
+    # all_idxs = [i for i in range(len(dataset))]
+    # for x in range(int(num_users*0.8),num_users):
+    #     dict_users[x] = set(np.random.choice(all_idxs, int(num_items/0.8), replace=False))
+    
+    
+    # num_shards, num_imgs = 200, 300
+    # idx_shard = [i for i in range(num_shards)]
+    # idxs = np.arange(num_shards*num_imgs)
+    # for i in range(int(num_users*0.8)):
+    #     rand_set = set(np.random.choice(idx_shard, int(num_shards/num_users/0.8), replace=False))
+    #     idx_shard = list(set(idx_shard) - rand_set)
+    #     for rand in rand_set:
+    #         dict_users[i] = np.concatenate((dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
+    # # pdb.set_trace()
+    # print("len(idx_shard) is: ", len(idx_shard))
+    # assert len(idx_shard) == 0
+    # for x in range(int(num_users*0.8),num_users):
+    #     dict_users[x] = np.concatenate(
+    #             (dict_users[x], dict_users[x-int(num_users*0.8)]), axis=0)
+    return dict_users
+        
+    # return dict_users
+    # num_shards, num_imgs = 200, 300
+    # idx_shard = [i for i in range(num_shards)]
+    # dict_users = {i: np.array([]) for i in range(num_users)}
+    # idxs = np.arange(num_shards*num_imgs)
+    # # pdb.set_trace()
+    # labels = np.array(dataset.targets)
+    # # labels = dataset.targets.numpy()
+    
+
+    # # pdb.set_trace()
+    # # sort labels
+    # idxs_labels = np.vstack((idxs, labels))
+    # idxs_labels = idxs_labels[:, idxs_labels[1, :].argsort()]
+    # idxs = idxs_labels[0, :]
+
+    # assert num_shards%num_users  == 0
+
+    # for i in range(int(num_users*0.8)):
+    #     rand_set = set(np.random.choice(idx_shard, int(num_shards/num_users/0.8), replace=False))
+    #     idx_shard = list(set(idx_shard) - rand_set)
+    #     for rand in rand_set:
+    #         dict_users[i] = np.concatenate(
+    #             (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
+    # # pdb.set_trace()
+    # print("len(idx_shard) is: ", len(idx_shard))
+    # assert len(idx_shard) == 0
+    # for x in range(int(num_users*0.8),num_users):
+    #     dict_users[x] = np.concatenate(
+    #             (dict_users[x], dict_users[x-int(num_users*0.8)]), axis=0)
+    # return dict_users
+
+def cifar100_iid(dataset, num_users):
+    """
+    Sample I.I.D. client data from CIFAR10 dataset
+    :param dataset:
+    :param num_users:
+    :return: dict of image index
+    """
+    # define overlapping:
+    if os.path.exists('../data/cifar100/dict_users_iid_'+str(num_users)+'.pkl'):
+        print("loading exist split data")
+        with open('../data/cifar100/dict_users_iid_'+str(num_users)+'.pkl', 'rb') as f:
+            dict_users = pickle.load(f)
+        return dict_users
+        
+    num_items = int(len(dataset)/num_users)
+    # dataset.targets
+    # each user has the information of 1/4 of classes, which is 25 classes and each class has 1/2 images in the dataset
+    if num_users >= 6:
+        ratio = 0.25
+    else:
+        ratio = 0.5
+    
+    
+    dict_users, all_idxs = {}, [i for i in range(len(dataset))]
+    for i in range(num_users):
+        # split classes for each users:
+        pick_classes_from_100_classes = np.random.choice(100, int(100*ratio), replace=False) 
+        all_index_list= []
+        for tem_calss in pick_classes_from_100_classes:
+            # indices = [index for index, value in enumerate(dataset) if value[-2] == tem_calss]
+            indices = [value[-1] for value in dataset if value[-2] == tem_calss]
+            all_index_list.append(np.random.choice(indices, int(len(indices)/2), replace=False))
+        # sub_inxs = dataset.targets
+        # dict_users[i] = set(np.random.choice(all_idxs, num_items, replace=False))
+        # pdb.set_trace()
+        dict_users[i] = set(np.array(all_index_list).reshape(-1))
+        
+        # dict_users[i] = set(np.random.choice(all_idxs, num_items, replace=False))
+        # all_idxs = list(set(all_idxs) - dict_users[i])
+    
+    print("split data is done")
+    pdb.set_trace()
+    with open('../data/cifar100/dict_users_iid_'+str(num_users)+'.pkl', 'wb') as f:
+        pickle.dump(dict_users, f)
+
     return dict_users
 
 
@@ -185,6 +338,35 @@ def cifar_noniid(dataset, num_users):
                 (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
     return dict_users
 
+def cifar_noniid_cifar100(dataset, num_users):
+    """
+    Sample non-I.I.D client data from CIFAR100 dataset
+    :param dataset:
+    :param num_users:
+    :return:
+    """
+    num_shards, num_imgs = 200, 250
+    
+    idx_shard = [i for i in range(num_shards)]
+    dict_users = {i: np.array([]) for i in range(num_users)}
+    idxs = np.arange(num_shards*num_imgs)
+    # import pdb; pdb.set_trace()
+    # labels = dataset.targets.numpy()
+    labels = np.array(dataset.targets)
+
+    # sort labels
+    idxs_labels = np.vstack((idxs, labels))
+    idxs_labels = idxs_labels[:, idxs_labels[1, :].argsort()]
+    idxs = idxs_labels[0, :]
+
+    # divide and assign
+    for i in range(num_users):
+        rand_set = set(np.random.choice(idx_shard, int(50000/num_imgs/num_users), replace=False))
+        idx_shard = list(set(idx_shard) - rand_set)
+        for rand in rand_set:
+            dict_users[i] = np.concatenate(
+                (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
+    return dict_users
 
 if __name__ == '__main__':
     dataset_train = datasets.MNIST('./data/mnist/', train=True, download=True,
