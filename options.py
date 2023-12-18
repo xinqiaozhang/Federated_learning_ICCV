@@ -26,7 +26,7 @@ def args_parser():
                         help="0 normal 1 FoE")
     parser.add_argument('--foe_rate', type=int, default=3,
                         help='FoE attack rate')
-    parser.add_argument('--meank_rate', type=int, default=60,
+    parser.add_argument('--meank_rate', type=int, default=50,
                         help='meank_rate defense')
     parser.add_argument('--en_defence', type=int, default=0,
                         help='enable defense')
@@ -34,8 +34,13 @@ def args_parser():
                         help=' group_size')
     parser.add_argument('--attack_rate', type=float, default=1,
                         help=' attack_rate')
-    parser.add_argument('--en_partial_att', type=int, default=0,
+    parser.add_argument('--final_aggregation_ratio', type=float, default=1,
+                        help=' final_aggregation_ratio')
+    parser.add_argument('--en_partial_att', type=int, default=100,
                         help=' en_partial_att')
+    parser.add_argument('--attack_scale', type=float, default=1,
+                        help=' attack_scale')
+    
 
     # model arguments
     parser.add_argument('--model', type=str, default='mlp', help='model name')
